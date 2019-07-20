@@ -1,11 +1,11 @@
 {
-  "name": "cybored",
+  "name": "unbored",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "@now/node ./index.js",
+    "start": "node ./index.js",
     "dev": "nodemon bin/start"
   },
   "author": "",

@@ -18,7 +18,7 @@ app.get('/events/:id/path', async (req, res, next) => {
   if (!id)
     return next(new createErrors.BadRequest())
 
-  res.json(await Api.getPath(id))
+  res.json(await Api.getPaths(id))
 })
 
 app.use((req, res, next, error) => {

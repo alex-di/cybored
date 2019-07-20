@@ -1,7 +1,4 @@
-{
+{ "name": "unbored", 
   "version": 2,
-  "name": "unbored",
-  "builds": [
-    { "src": "*.js", "use": "@now/node" }
-  ]
-}
+  "builds": [{ "src": "bin/start", "use": "@now/node-server" }],
+  "routes": [{ "src": "/(.*)", "dest": "/bin/start" }] }
