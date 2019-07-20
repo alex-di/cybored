@@ -20,14 +20,18 @@ app.get('/events', (req, res, next) => {
 
 app.get('/events/:id/path', async (req, res, next) => {
   let { id } = req.params
+  ,   { coords } = req.query
 
-  if (!id)
+  if (!coords)
     return next(new createErrors.BadRequest())
 
-  Paths.find({ eventId: id })
-  .then(paths => {
-    res.json({ result: paths.map(p => p.toJSON())})
+  Event.findOne({ _id: id })
+  .then(event => {
+    if (!event)
+      throw new createErrors.BadRequest()
+    return event.getPaths(req.query.coords.split(',').map(Number))
   })
+  .then(paths => res.json(paths))
   .catch(next)
 })
 
