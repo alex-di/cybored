@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "name": "unbored",
+  "builds": [
+    { "src": "*.js", "use": "@now/node" }
+  ]
+}
