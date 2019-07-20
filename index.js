@@ -1,15 +1,21 @@
 var app = require('express')()
 ,   createErrors = require('http-errors')
-,   API = require('./api')
-
-const Api = new API()
+,   Event = require('./models/Event')
+,   Category = require('./models/Category')
+,   mongoose = require('mongoose')
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 app.get('/categories', async (req, res) => {
-  res.json(await Api.getCategories())
+  Category.find()
+  .then(categories => res.json({ result: categories.map(c => c.toJSON())}))
 })
 
-app.get('/events', async (req, res) => {
-  res.json(await Api.getEvents())
+app.get('/events', (req, res, next) => {
+  Event.find()
+  .then(events => {
+    res.json({ result: events.map(e => e.toJSON())})
+  })
+  .catch(next)
 })
 
 app.get('/events/:id/path', async (req, res, next) => {
@@ -18,12 +24,16 @@ app.get('/events/:id/path', async (req, res, next) => {
   if (!id)
     return next(new createErrors.BadRequest())
 
-  res.json(await Api.getPaths(id))
+  Paths.find({ eventId: id })
+  .then(paths => {
+    res.json({ result: paths.map(p => p.toJSON())})
+  })
+  .catch(next)
 })
 
-app.use((req, res, next, error) => {
+app.use((error, req, res, next) => {
   console.log(error.stack)
   res.status(error.status)
-  res.json(e)
+  res.json(error)
 })
 module.exports = app
