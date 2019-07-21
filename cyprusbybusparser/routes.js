@@ -29,8 +29,8 @@ let buffer = {
 
 class RouteClass {
   constructor(cbbId, name, name2, details) {
-    console.log("ROUTE CLASS", cbbId)
     buffer.cbbId = cbbId
+    buffer.name = name
     buffer.details = details
     this.connections = []
     this.reverseConnections = []

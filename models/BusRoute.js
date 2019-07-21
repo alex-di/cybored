@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
     type: Number,
     required: true
   },
+  details: String,
+  name: String,
   stops: [
     {
       type: 'ObjectId',
@@ -13,7 +15,7 @@ const mongoose = require('mongoose')
 })
 
 schema.methods.getLineString = function() {
-  console.log(this.stops)
+  // console.log(this.stops)
   return this.stops
 }
 

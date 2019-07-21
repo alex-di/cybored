@@ -1,3 +1,4 @@
+const GeoJSON = require('mongoose-geojson-schema')
 const mongoose = require('mongoose')
 ,     schema = new mongoose.Schema({
   title: String,
@@ -15,4 +16,7 @@ schema.index({
 }, {
   unique: true
 })
+
+schema.index({ geometry: "2dsphere" });
+
 module.exports = mongoose.model('BusStop', schema);

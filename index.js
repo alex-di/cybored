@@ -16,7 +16,7 @@ app.get('/categories', async (req, res) => {
 app.get('/events', (req, res, next) => {
   Event.find()
   .then(events => {
-    res.json({ result: events.map(e => e.toJSON())})
+    res.json({ result: events.map(e => e.toJSON({ virtuals: true }))})
   })
   .catch(next)
 })
