@@ -1,8 +1,12 @@
 {
   "name": "unbored",
   "version": 2,
-  "builds": [{ "src": "bin/start", "use": "@now/node-server" }],
-  "routes": [{ "src": "/(.*)", "dest": "/bin/start" }] ,
+  "builds": [
+    { "src": "bin/start", "use": "@now/node-server" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/bin/start" }
+  ],
   "env": {
     "MONGODB_URI": "@mongodb"
   }

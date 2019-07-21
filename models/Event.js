@@ -15,6 +15,7 @@ const GeoJSON = require('mongoose-geojson-schema')
   phone: String,
   contactInfo: String,
   image: String,
+  coords: [ Number ],
   geometry: {
     type: 'Point'
   },

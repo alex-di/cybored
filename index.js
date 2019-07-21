@@ -1,13 +1,16 @@
-var app = require('express')()
+var express = require('express')
+,   path = require('path')
+,   app = express()
 ,   createErrors = require('http-errors')
 ,   Event = require('./models/Event')
 ,   Category = require('./models/Category')
 ,   mongoose = require('mongoose')
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
+app.use(express.static(path.join(__dirname, 'public')))
 app.get('/categories', async (req, res) => {
   Category.find()
-  .then(categories => res.json({ result: categories.map(c => c.toJSON())}))
+  .then(categories => res.json({ result: categories.map(c => c.toJSON({ virtuals: true }))}))
 })
 
 app.get('/events', (req, res, next) => {
