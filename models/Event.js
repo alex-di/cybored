@@ -60,7 +60,7 @@ function getPathfinder() {
       features: routes.map(route => ({
         type: 'Feature',
         properties: {
-          id: route.cbbId
+          ...route.toJSON({ virtual: true })
         },
         geometry: {
           type: 'LineString',
@@ -70,10 +70,6 @@ function getPathfinder() {
     }
     return pathFinder = new PathFinder(mutated, {
       edgeDataSeed: -1,
-      edgeDataReduceFn: function(a, p) {
-        // console.log({a, p})
-        return {id: p.id};
-      },
     })
   })
 }
@@ -118,25 +114,27 @@ schema.methods.getPaths = function(coordinates) {
           path = pf.findPath(userStops[0], eventStops[0])
         // }
 
-        return BusStop.find({ coords: { $in: path.path }}).select('_id title area coords')
-        .then(stops =>
-          BusRoute.find({
-            stops: {
-              $in: stops.map(s => s._id)
-            }
-          })
-          .select('name details stops')
-          .then(data => ({
-            path: path.path.map(p => {
-              let stop = stops.find(s => s.coords[0] === p[0] && s.coords[1] === p[1]).toJSON()
-              return ({
-                ...stop || {},
-                route: data.find(r => r.stops.includes(stop._id))
-              })
-            }),
-            // routes: data
-          }))
-        )
+        return path
+
+        // return BusStop.find({ coords: { $in: path.path }}).select('_id title area coords')
+        // .then(stops =>
+        //   BusRoute.find({
+        //     stops: {
+        //       $in: stops.map(s => s._id)
+        //     }
+        //   })
+        //   .select('name details stops')
+        //   .then(data => ({
+        //     path: path.path.map(p => {
+        //       let stop = stops.find(s => s.coords[0] === p[0] && s.coords[1] === p[1]).toJSON()
+        //       return ({
+        //         ...stop || {},
+        //         route: data.find(r => r.stops.includes(stop._id))
+        //       })
+        //     }),
+        //     // routes: data
+        //   }))
+        // )
 
       })
   })
