@@ -6,7 +6,8 @@ const mongoose = require('mongoose')
     required: true
   },
   area: String,
-  coords: Array,
+  coords: [ Number ],
+  geometry: 'Point'
 })
 
 schema.index({

@@ -16,9 +16,7 @@ const GeoJSON = require('mongoose-geojson-schema')
   contactInfo: String,
   image: String,
   coords: [ Number ],
-  geometry: {
-    type: 'Point'
-  },
+  geometry: 'Point',
 
   category: {
     type: 'ObjectId',
@@ -27,6 +25,11 @@ const GeoJSON = require('mongoose-geojson-schema')
   },
 }, {
   timestamps: true
+})
+
+schema.virtual('video_preview').get(function() {
+
+  return `https://unbored.mm77707.now.sh/e/${this._id}.jpeg`
 })
 
 var geoPromise, geoData, pathFinder
@@ -71,13 +74,14 @@ function getPathfinder() {
 // .catch(console.log)
 
 schema.methods.getPaths = function(coords) {
-  geolib.orderByDistance(coords, )
-  return getPathfinder()
-    .then(pf =>
-      pf.findPath(
-        { geometry: { type: "Point", coordinates: coords } },
-        { geometry: { type: "Point", coordinates: this.coords } })
-    )
+  // geolib.orderByDistance(coords, )
+  console.log(this.model)
+  // return getPathfinder()
+  //   .then(pf =>
+  //     pf.findPath(
+  //       { geometry: { type: "Point", coordinates: coords } },
+  //       { geometry: { type: "Point", coordinates: this.coords } })
+  //   )
 
 }
 module.exports = mongoose.model('Event', schema);

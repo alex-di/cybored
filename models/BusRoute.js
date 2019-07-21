@@ -12,6 +12,11 @@ const mongoose = require('mongoose')
   ]
 })
 
+schema.methods.getLineString = function() {
+  console.log(this.stops)
+  return this.stops
+}
+
 schema.index({
   cbbId: 1
 }, {
